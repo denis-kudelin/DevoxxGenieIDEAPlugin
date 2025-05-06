@@ -234,6 +234,7 @@ public class LLMProvidersConfigurable implements Configurable {
         llmSettingsComponent.getCustomOpenAIModelNameEnabledCheckBox().setSelected(settings.isCustomOpenAIModelNameEnabled());
         llmSettingsComponent.getCustomOpenAIForceHttp11CheckBox().setSelected(settings.isCustomOpenAIForceHttp11());
 
+
         llmSettingsComponent.getOpenAIEnabledCheckBox().setSelected(settings.isOpenAIEnabled());
         llmSettingsComponent.getMistralEnabledCheckBox().setSelected(settings.isMistralEnabled());
         llmSettingsComponent.getAnthropicEnabledCheckBox().setSelected(settings.isAnthropicEnabled());
