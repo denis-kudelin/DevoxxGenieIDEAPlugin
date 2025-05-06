@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.net.http.HttpClient;
 
 public class CustomOpenAIChatModelFactory implements ChatModelFactory {
 
@@ -30,6 +31,7 @@ public class CustomOpenAIChatModelFactory implements ChatModelFactory {
                 .timeout(Duration.ofSeconds(chatModel.getTimeout()))
                 .topP(chatModel.getTopP())
                 .listeners(getListener())
+                .httpClient(getHttpClient())
                 .build();
     }
 
@@ -45,7 +47,16 @@ public class CustomOpenAIChatModelFactory implements ChatModelFactory {
                 .topP(chatModel.getTopP())
                 .timeout(Duration.ofSeconds(chatModel.getTimeout()))
                 .listeners(getListener())
+                .httpClient(getHttpClient())
                 .build();
+    }
+
+    private HttpClient getHttpClient() {
+        boolean f = DevoxxGenieStateService.getInstance().isCustomOpenAIForceHttp11();
+        return f ? HttpClient.newBuilder()
+                          .version(HttpClient.Version.HTTP_1_1)
+                          .build()
+                 : HttpClient.newBuilder().build();
     }
 
     /**

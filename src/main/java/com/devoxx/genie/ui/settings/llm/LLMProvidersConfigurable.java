@@ -129,6 +129,7 @@ public class LLMProvidersConfigurable implements Configurable {
         settings.setCustomOpenAIModelName(llmSettingsComponent.getCustomOpenAIModelNameField().getText());
         settings.setCustomOpenAIApiKey(new String(llmSettingsComponent.getCustomOpenAIApiKeyField().getPassword()));
         settings.setCustomOpenAIApiKeyEnabled(llmSettingsComponent.getEnableCustomOpenAIApiKeyCheckBox().isSelected());
+        settings.setCustomOpenAIForceHttp11(llmSettingsComponent.getCustomOpenAIForceHttp11CheckBox().isSelected());
 
         settings.setOpenAIKey(new String(llmSettingsComponent.getOpenAIKeyField().getPassword()));
         settings.setMistralKey(new String(llmSettingsComponent.getMistralApiKeyField().getPassword()));
@@ -231,6 +232,7 @@ public class LLMProvidersConfigurable implements Configurable {
 
         llmSettingsComponent.getCustomOpenAIUrlEnabledCheckBox().setSelected(settings.isCustomOpenAIUrlEnabled());
         llmSettingsComponent.getCustomOpenAIModelNameEnabledCheckBox().setSelected(settings.isCustomOpenAIModelNameEnabled());
+        llmSettingsComponent.getCustomOpenAIForceHttp11CheckBox().setSelected(settings.getCustomOpenAIForceHttp11());
 
         llmSettingsComponent.getOpenAIEnabledCheckBox().setSelected(settings.isOpenAIEnabled());
         llmSettingsComponent.getMistralEnabledCheckBox().setSelected(settings.isMistralEnabled());
