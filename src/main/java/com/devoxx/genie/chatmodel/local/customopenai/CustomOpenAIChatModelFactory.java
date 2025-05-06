@@ -8,6 +8,8 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
+import dev.langchain4j.http.client.jdk.JdkHttpClient;
+import dev.langchain4j.http.client.jdk.JdkHttpClientBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -31,7 +33,7 @@ public class CustomOpenAIChatModelFactory implements ChatModelFactory {
                 .timeout(Duration.ofSeconds(chatModel.getTimeout()))
                 .topP(chatModel.getTopP())
                 .listeners(getListener())
-                .httpClient(getHttpClient())
+                .httpClientBuilder(getHttpClientBuilder())
                 .build();
     }
 
@@ -47,16 +49,16 @@ public class CustomOpenAIChatModelFactory implements ChatModelFactory {
                 .topP(chatModel.getTopP())
                 .timeout(Duration.ofSeconds(chatModel.getTimeout()))
                 .listeners(getListener())
-                .httpClient(getHttpClient())
+                .httpClientBuilder(getHttpClientBuilder())
                 .build();
     }
 
-    private HttpClient getHttpClient() {
-        boolean f = DevoxxGenieStateService.getInstance().isCustomOpenAIForceHttp11();
-        return f ? HttpClient.newBuilder()
-                          .version(HttpClient.Version.HTTP_1_1)
-                          .build()
-                 : HttpClient.newBuilder().build();
+    private JdkHttpClientBuilder getHttpClientBuilder() {
+        boolean forceHttp11 = DevoxxGenieStateService.getInstance().isCustomOpenAIForceHttp11();
+        return forceHttp11
+                ? JdkHttpClient.builder()
+                        .httpClientBuilder(HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1))
+                : JdkHttpClient.builder();
     }
 
     /**
